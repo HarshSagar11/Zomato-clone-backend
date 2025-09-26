@@ -14,22 +14,22 @@ INSERT INTO wallet (balance) VALUES
     (1000),
     (1000);
 
-INSERT INTO app_user (name, email, password, wallet_id)
+INSERT INTO app_user (name, email, password, wallet_id, phone_number)
 VALUES
-    ('John Doe', 'john.doe@example.com', '$2a$10$iYJe3yGl0hlfmw8ENr6vl..FicbCZGDVaC2lN/tzC29dF9RJk94vC', 1),
-        ('Jane Smith', 'jane.smith@example.com', '$2a$10$V5v46PrgsInO5amlSMmrcOdjp2eo9nmuhHk.hY0jLz4oGql3AIoI6', 2),
-        ('Alice Johnson', 'alice.johnson@example.com', '$2a$10$9c9xiDYe/jT6Fj3PbsRxP.guI0yBD2UO9aTUxVjxfuo323EQSfQX6', 3),
-        ('Bob Brown', 'bob.brown@example.com', '$2a$10$x0MqShOAyK825P/hc2OooeBh0bWtdGn7OHGLRNnyWbFJTiSNaHHQm', 4),
-        ('Charlie White', 'charlie.white@example.com', '$2a$10$T.XB6A31JiefxNRdv9WfDe.Iz32wNTH2FPwvQNR8pCpstdEGOAOQK', 5),
-        ('Diana Green', 'diana.green@example.com', '$2a$10$CVaL3gXunSGz7SmshqCuEu6Fh.aJ8VtoMGePUMXsQMeGl2a5i.RtO', 6),
-        ('Eve Black', 'eve.black@example.com', '$2a$10$dWVmWfNwaBqkYlsU9JPCS.AC.b8W/K2iRq9jT/ZISYzuyPcFe4R9C', 7),
-        ('Frank Blue', 'frank.blue@example.com', '$2a$10$M61VvS7Q9ewyUWgIXj/A6u6wSeYbtWmEdfzRk.236dYsHLTl1uKDu', 8),
-        ('Grace Yellow', 'grace.yellow@example.com', '$2a$10$/ioP28/Zi2gilL9BukI5COe6WJ2o3XLNRpdD1h5JWkNFWp9hc5JNO', 9),
-        ('Henry Purple', 'henry.purple@example.com', '$2a$10$NDF0qLr.WuW5x9aoI5vkueHXStbCA3/BusNi3uQrHv/zHSEfqZztG', 10),
-        ('Ivy Brown', 'ivy.brown@example.com', '$2a$10$v4kOkOyDx2CvQ/LFBhQk7eerq.icCr/yybsRaRVLuDjxquZ0op6c6', 11),
-        ('Jack White', 'jack.white@example.com', '$2a$10$sL7CkGRMGr521eWXtQ/eFOGbPRyA9YOinN87VfO4bAGUKgCxVaRXK', 12),
-        ('Liam Gray', 'liam.gray@example.com', '$2a$10$eXShYZj/U1t7wSCsRiiptOzlSML9SFO9itG9iHvQIARCjiu5WPL4a', 13),
-        ('Mia Red', 'mia.red@example.com', '$2a$10$keFj1WWKTPzpZGDvhmbEEu631Uc97vdiisvbmtSd7iwf7JiBPpRla', 14);
+    ('John Doe', 'john.doe@example.com', '$2a$10$iYJe3yGl0hlfmw8ENr6vl..FicbCZGDVaC2lN/tzC29dF9RJk94vC', 1, '9097652543'),
+    ('Jane Smith', 'jane.smith@example.com', '$2a$10$V5v46PrgsInO5amlSMmrcOdjp2eo9nmuhHk.hY0jLz4oGql3AIoI6', 2, '9097652543'),
+    ('Alice Johnson', 'alice.johnson@example.com', '$2a$10$9c9xiDYe/jT6Fj3PbsRxP.guI0yBD2UO9aTUxVjxfuo323EQSfQX6', 3, '9097652543'),
+    ('Bob Brown', 'bob.brown@example.com', '$2a$10$x0MqShOAyK825P/hc2OooeBh0bWtdGn7OHGLRNnyWbFJTiSNaHHQm', 4, '9097652543'),
+    ('Charlie White', 'charlie.white@example.com', '$2a$10$T.XB6A31JiefxNRdv9WfDe.Iz32wNTH2FPwvQNR8pCpstdEGOAOQK', 5, '9097652543'),
+    ('Diana Green', 'diana.green@example.com', '$2a$10$CVaL3gXunSGz7SmshqCuEu6Fh.aJ8VtoMGePUMXsQMeGl2a5i.RtO', 6, '9097652543'),
+    ('Eve Black', 'eve.black@example.com', '$2a$10$dWVmWfNwaBqkYlsU9JPCS.AC.b8W/K2iRq9jT/ZISYzuyPcFe4R9C', 7, '9097652543'),
+    ('Frank Blue', 'frank.blue@example.com', '$2a$10$M61VvS7Q9ewyUWgIXj/A6u6wSeYbtWmEdfzRk.236dYsHLTl1uKDu', 8, '9097652543'),
+    ('Grace Yellow', 'grace.yellow@example.com', '$2a$10$/ioP28/Zi2gilL9BukI5COe6WJ2o3XLNRpdD1h5JWkNFWp9hc5JNO', 9, '9097652543'),
+    ('Henry Purple', 'henry.purple@example.com', '$2a$10$NDF0qLr.WuW5x9aoI5vkueHXStbCA3/BusNi3uQrHv/zHSEfqZztG', 10, '9097652543'),
+    ('Ivy Brown', 'ivy.brown@example.com', '$2a$10$v4kOkOyDx2CvQ/LFBhQk7eerq.icCr/yybsRaRVLuDjxquZ0op6c6', 11, '9097652543'),
+    ('Jack White', 'jack.white@example.com', '$2a$10$sL7CkGRMGr521eWXtQ/eFOGbPRyA9YOinN87VfO4bAGUKgCxVaRXK', 12, '9097652543'),
+    ('Liam Gray', 'liam.gray@example.com', '$2a$10$eXShYZj/U1t7wSCsRiiptOzlSML9SFO9itG9iHvQIARCjiu5WPL4a', 13, '9097652543'),
+    ('Mia Red', 'mia.red@example.com', '$2a$10$keFj1WWKTPzpZGDvhmbEEu631Uc97vdiisvbmtSd7iwf7JiBPpRla', 14, '9097652543');
 
 INSERT INTO user_role (user_id, role) VALUES
 (1, 'CUSTOMER'),
@@ -50,7 +50,7 @@ INSERT INTO user_role (user_id, role) VALUES
 INSERT INTO admin (user_id) VALUES
 (2);
 
-INSERT INTO address_table (complete_address, current_location) VALUES
+INSERT INTO address (complete_address, coordinates) VALUES
 ('Sample Location 1', ST_GeomFromText('POINT(85.00484693864607 24.887359089198398)', 4326)),
 ('Sample Location 2', ST_GeomFromText('POINT(85.00356464644203 24.77541187094315)', 4326)),
 ('Sample Location 3', ST_GeomFromText('POINT(85.01154283452769 24.821605640069652)', 4326)),
