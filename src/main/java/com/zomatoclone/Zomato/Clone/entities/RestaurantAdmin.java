@@ -3,26 +3,27 @@ package com.zomatoclone.Zomato.Clone.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Admin {
+public class RestaurantAdmin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JoinColumn(name = "user_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User user;
 
-    @OneToMany(mappedBy = "admin")
-    private List<DeliveryPartner> onBoardedDeliverPartners;
+    private Long aadharNo;
 
-    @OneToMany(mappedBy = "addedBy")
-    private List<RestaurantAdmin> onBoardedRestaurantAdmins;
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    private Admin addedBy;
 
-
+    @OneToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 }

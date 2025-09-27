@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +20,10 @@ public class Customer {
     private User user;
 
     private Double rating;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     //TODO : add orders here
 }

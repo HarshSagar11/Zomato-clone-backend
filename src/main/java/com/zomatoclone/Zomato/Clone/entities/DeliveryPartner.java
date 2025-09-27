@@ -8,22 +8,29 @@ import org.locationtech.jts.geom.Point;
 @Entity
 @Getter
 @Setter
-public class Address {
+public class DeliveryPartner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String completeAddress;
+    @JoinColumn(name = "user_id")
+    @OneToOne
+    private User user;
+
+    private Long aadharNo;
+
+    private String vehicleNo;
 
     @Column(columnDefinition = "geometry(Point, 4326)")
-    private Point coordinates;
+    private Point current_location;
 
-    @OneToOne(mappedBy = "address")
-    private Customer customer;
+    private boolean isAvailable;
 
-    @OneToOne(mappedBy = "address")
-    private Restaurant restaurant;
+    private double rating;
 
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
 }

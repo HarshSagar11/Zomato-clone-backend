@@ -4,22 +4,24 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
-public class CartItem {
-
+public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int quantity;
-
+    @JoinColumn(name = "restaurant_id")
     @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
-    private Cart cart;
+    private Restaurant restaurant;
 
-    @JoinColumn(name = "menuItem_id")
-    @OneToOne
-    private MenuItem menuItem;
+    private String menuName;
+
+    @OneToMany(mappedBy = "menu")
+    private List<MenuItem> items;
+
+    private boolean isActive;
 }

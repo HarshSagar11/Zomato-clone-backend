@@ -34,12 +34,12 @@ VALUES
 INSERT INTO user_role (user_id, role) VALUES
 (1, 'CUSTOMER'),
 (2, 'ADMIN'),
-(3, 'RESTAURANT_PARTNER'),
-(4, 'RESTAURANT_PARTNER'),
-(5, 'RESTAURANT_PARTNER'),
-(6, 'RESTAURANT_PARTNER'),
-(7, 'RESTAURANT_PARTNER'),
-(8, 'RESTAURANT_PARTNER'),
+(3, 'RESTAURANT_ADMIN'),
+(4, 'RESTAURANT_ADMIN'),
+(5, 'RESTAURANT_ADMIN'),
+(6, 'RESTAURANT_ADMIN'),
+(7, 'RESTAURANT_ADMIN'),
+(8, 'RESTAURANT_ADMIN'),
 (9, 'DELIVERY_PARTNER'),
 (10, 'DELIVERY_PARTNER'),
 (11, 'DELIVERY_PARTNER'),
@@ -65,31 +65,38 @@ INSERT INTO address (complete_address, coordinates) VALUES
 ('Sample Location 12', ST_GeomFromText('POINT(85.01337443105635 24.7288465569714)', 4326)),
 ('Sample Location 13', ST_GeomFromText('POINT(85.02189397324304 24.85761871768386)', 4326));
 
-INSERT INTO delivery_partner (user_id, aadhar_no, vehicle_id, is_available, admin_id, address_table_id, contact, rating) VALUES
-(9, 1001, 'BR02-1111', true, 1, 13, 234567 , 4.9),
-(10, 1002, 'BR02-2222', true, 1, 10, 987265, 4.8),
-(11, 1003, 'BR02-3333', true, 1, 11, 567538, 4.7),
-(12, 1004, 'BR02-4444', true, 1, 12, 897253, 4.8),
-(13, 1005, 'BR02-5555', true, 1, 6, 987234, 4.6),
-(14, 1006, 'BR02-6666', true, 1, 3, 332423, 4.7);
+--INSERT INTO delivery_partner (user_id, aadhar_no, vehicle_no, is_available, admin_id, current_location, rating) VALUES
+--(9, 1001, 'BR02-1111', true, 1, 13 , 4.9),
+--(10, 1002, 'BR02-2222', true, 1, 10, 4.8),
+--(11, 1003, 'BR02-3333', true, 1, 11, 4.7),
+--(12, 1004, 'BR02-4444', true, 1, 12, 4.8),
+--(13, 1005, 'BR02-5555', true, 1, 6, 4.6),
+--(14, 1006, 'BR02-6666', true, 1, 3, 4.7);
+INSERT INTO delivery_partner (user_id, aadhar_no, vehicle_no, is_available, admin_id, current_location, rating) VALUES
+(9, 2001, 'BR03-1111', true, 1, ST_GeomFromText('POINT(84.99454609086521 24.800374677294016)', 4326), 4.9), -- center
+(10, 2002, 'BR03-2222', true, 1, ST_GeomFromText('POINT(85.00454609086521 24.810374677294016)', 4326), 4.8), -- NE
+(11, 2003, 'BR03-3333', true, 1, ST_GeomFromText('POINT(84.98454609086521 24.795374677294016)', 4326), 4.7), -- SW
+(12, 2004, 'BR03-4444', true, 1, ST_GeomFromText('POINT(84.99954609086521 24.790374677294016)', 4326), 4.8), -- S
+(13, 2005, 'BR03-5555', true, 1, ST_GeomFromText('POINT(85.00954609086521 24.805374677294016)', 4326), 4.6), -- E
+(14, 2006, 'BR03-6666', true, 1, ST_GeomFromText('POINT(84.97954609086521 24.810374677294016)', 4326), 4.7); -- W
 
-INSERT INTO restaurant_partner (user_id, aadhar_no, admin_id) VALUES
-(3, 1111, 1),
-(4, 1112, 1),
-(5, 1113, 1),
-(6, 1114, 1),
-(7, 1115, 1),
-(8, 1116, 1);
+INSERT INTO restaurant ( name, description, restaurant_type, is_open, address_id, rating) VALUES
+('Spice Delight', 'A popular restaurant offering a wide variety of Indian spices and curries.', 'VEG_AND_NON_VEG', true, 1, 4.6),
+('Tandoori Flames', 'Authentic tandoori dishes with rich flavors.', 'NON_VEG', true, 2, 4.4),
+('Ocean Grill', 'Seafood specialties with a coastal ambiance.', 'NON_VEG', true, 5, 4.3),
+('Urban Tadka', 'A modern twist on traditional Indian flavors.', 'VEG_AND_NON_VEG', true, 7, 4.8),
+('Street Spice', 'A casual eatery serving popular Indian street food.', 'VEG', true, 8, 4.2),
+('Flavors of Punjab', 'North Indian cuisine with a variety of rich curries.', 'VEG_AND_NON_VEG', true, 9, 4.5);
 
-INSERT INTO restaurant (restaurant_partner_id, name, description, restaurant_type, is_open, address_id, rating) VALUES
-(1, 'Spice Delight', 'A popular restaurant offering a wide variety of Indian spices and curries.', 'VEG_AND_NON_VEG', true, 1, 4.6),
-(2, 'Tandoori Flames', 'Authentic tandoori dishes with rich flavors.', 'NON_VEG', true, 2, 4.4),
-(3, 'Ocean Grill', 'Seafood specialties with a coastal ambiance.', 'NON_VEG', true, 5, 4.3),
-(4, 'Urban Tadka', 'A modern twist on traditional Indian flavors.', 'VEG_AND_NON_VEG', true, 7, 4.8),
-(5, 'Street Spice', 'A casual eatery serving popular Indian street food.', 'VEG', true, 8, 4.2),
-(6, 'Flavors of Punjab', 'North Indian cuisine with a variety of rich curries.', 'VEG_AND_NON_VEG', true, 9, 4.5);
+INSERT INTO restaurant_admin (user_id, aadhar_no, admin_id, restaurant_id) VALUES
+(3, 1111, 1, 1),
+(4, 1112, 1, 2),
+(5, 1113, 1, 3),
+(6, 1114, 1, 4),
+(7, 1115, 1, 5),
+(8, 1116, 1, 6);
 
-INSERT INTO menu (menu_name, restaurant_id, is_available) VALUES
+INSERT INTO menu (menu_name, restaurant_id, is_active) VALUES
 ('Indian Special', 1, true),
 ('Tandoori Platter', 1, true),
 ('Butter Chicken', 2, true),
@@ -103,7 +110,7 @@ INSERT INTO menu (menu_name, restaurant_id, is_available) VALUES
 ('Pav Bhaji', 6, true),
 ('Chaat Sampler', 6, true);
 
-INSERT INTO menu_item (name, description, menu_id, type, amount, rating, is_available) VALUES
+INSERT INTO menu_item (name, description, menu_id, type, price, rating, is_available) VALUES
 ('Paneer Butter Masala', 'Creamy and rich paneer curry.', 1, 'VEG_MAIN_COURSE', 250, 4.7, true),
 ('Garlic Naan', 'Soft Indian bread with garlic and butter.', 1, 'VEG_SNACKS', 50, 4.5, true),
 ('Mango Lassi', 'Refreshing mango yogurt drink.', 1, 'JUICE', 80, 4.3, true),
@@ -141,5 +148,8 @@ INSERT INTO menu_item (name, description, menu_id, type, amount, rating, is_avai
 ('Dahi Puri', 'Puffed puris filled with yogurt and spices.', 12, 'VEG_SNACKS', 125, 4.7, true),
 ('Gulab Jamun', 'Soft deep-fried dumplings in sugar syrup.', 12, 'VEG_DESSERT', 140, 4.9, true);
 
-INSERT INTO customer (user_id, contact, address_table_id,rating) VALUES
-(1,909765, 4 ,4.3);
+INSERT INTO customer (user_id, address_id, rating) VALUES
+(1, 4 ,4.3);
+
+INSERT INTO cart (total_amount, customer_id) VALUES
+(0,1);

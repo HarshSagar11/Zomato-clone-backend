@@ -30,7 +30,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
     private String phoneNumber;
 
     @ElementCollection(fetch = FetchType.EAGER)
