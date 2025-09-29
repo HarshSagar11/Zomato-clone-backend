@@ -1,11 +1,6 @@
 package com.zomatoclone.Zomato.Clone.dto;
 
-import com.zomatoclone.Zomato.Clone.entities.Address;
 import com.zomatoclone.Zomato.Clone.entities.enums.RestaurantTypes;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

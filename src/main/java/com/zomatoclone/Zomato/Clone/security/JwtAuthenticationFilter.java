@@ -1,7 +1,6 @@
 package com.zomatoclone.Zomato.Clone.security;
 
 import com.zomatoclone.Zomato.Clone.entities.User;
-import com.zomatoclone.Zomato.Clone.exceptions.ResourceNotFoundException;
 import com.zomatoclone.Zomato.Clone.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

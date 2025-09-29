@@ -1,6 +1,5 @@
 package com.zomatoclone.Zomato.Clone.entities;
 
-import com.zomatoclone.Zomato.Clone.entities.enums.DeliveryRequestStatus;
 import com.zomatoclone.Zomato.Clone.entities.enums.DeliveryStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
