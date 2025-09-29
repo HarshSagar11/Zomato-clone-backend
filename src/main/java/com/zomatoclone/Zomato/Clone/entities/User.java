@@ -2,8 +2,7 @@ package com.zomatoclone.Zomato.Clone.entities;
 
 import com.zomatoclone.Zomato.Clone.entities.enums.Roles;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +15,8 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Table(name = "app_user")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
