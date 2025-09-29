@@ -37,6 +37,7 @@ public class Restaurant {
     @OneToOne(mappedBy = "restaurant")
     private RestaurantAdmin admin;
 
-    //TODO add orders
+    @OneToMany(mappedBy = "restaurant")
+    private List<OrderRequest> orderRequest;
     
 }

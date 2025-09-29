@@ -21,9 +21,14 @@ public class Customer {
 
     private Double rating;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    //TODO : add orders here
+    @OneToMany(mappedBy = "customer")
+    private List<OrderRequest> orderRequests;
+
+    @OneToMany(mappedBy = "customer")
+    private List<CustomerOrder> customerOrders;
+
 }

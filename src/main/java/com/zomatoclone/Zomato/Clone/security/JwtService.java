@@ -26,7 +26,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
-    private static final long ACCESS_TOKEN_EXPIRATION = 1000 * 60;       // 15 minutes
+    private static final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 15;       // 15 minutes
     private static final long REFRESH_TOKEN_EXPIRATION = 1000L * 60 * 60 * 24 * 7; // 7 days
 
     public String generateAccessToken(User user){
