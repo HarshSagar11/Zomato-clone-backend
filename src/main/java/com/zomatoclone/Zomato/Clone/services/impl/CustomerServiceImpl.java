@@ -1,17 +1,12 @@
 package com.zomatoclone.Zomato.Clone.services.impl;
 
-import com.zomatoclone.Zomato.Clone.dto.RestaurantResponseDto;
-import com.zomatoclone.Zomato.Clone.dto.SaveAddressRequestDto;
-import com.zomatoclone.Zomato.Clone.entities.Address;
-import com.zomatoclone.Zomato.Clone.entities.Customer;
-import com.zomatoclone.Zomato.Clone.entities.Restaurant;
-import com.zomatoclone.Zomato.Clone.entities.User;
+import com.zomatoclone.Zomato.Clone.dto.*;
+import com.zomatoclone.Zomato.Clone.entities.*;
 import com.zomatoclone.Zomato.Clone.exceptions.BadRequestException;
 import com.zomatoclone.Zomato.Clone.exceptions.ResourceNotFoundException;
+import com.zomatoclone.Zomato.Clone.exceptions.ServiceUnavailableException;
 import com.zomatoclone.Zomato.Clone.repositories.CustomerRepository;
-import com.zomatoclone.Zomato.Clone.services.AddressService;
-import com.zomatoclone.Zomato.Clone.services.CustomerService;
-import com.zomatoclone.Zomato.Clone.services.RestaurantService;
+import com.zomatoclone.Zomato.Clone.services.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -19,6 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,13 +27,17 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
     private final AddressService addressService;
+    private final MenuService menuService;
+    private final CartService cartService;
 
     @Override
     public void createCustomerFromUser(User user) {
+        log.info("Saving Customer with user id :{}", user.getId());
         Customer customer = new Customer();
         customer.setUser(user);
         customer.setRating(0d);
-        customerRepository.save(customer);
+        Customer savedCustomer = customerRepository.save(customer);
+        cartService.createNewCart(savedCustomer);
     }
 
     @Override
@@ -61,6 +63,28 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setAddress(address);
         customerRepository.save(customer);
         return "Address saved successfully";
+    }
+
+    @Override
+    public List<MenuDto> getMenuOfRestaurant(Long restaurantId) {
+        List<Menu> menus = menuService.getMenuOfRestaurant(restaurantId);
+        return menus.stream()
+                .map(menu -> modelMapper.map(menu, MenuDto.class))
+                .toList();
+    }
+
+    @Override
+    public ItemAddedToCartResponse addMenuItemsToCart(AddToCartRequest addToCartRequest) {
+        Customer customer = this.getCurrentCustomer();
+        cartService.addItemToCartOfCustomer(customer.getId(), addToCartRequest);
+        return ItemAddedToCartResponse.builder().message("Item Added to cart Successfully").build();
+    }
+
+    @Override
+    public CartResponseDto getCartOfCustomer() {
+        Customer customer = this.getCurrentCustomer();
+        Cart cart = customer.getCart();
+        return modelMapper.map(cart,CartResponseDto.class);
     }
 
     private Customer getCurrentCustomer(){

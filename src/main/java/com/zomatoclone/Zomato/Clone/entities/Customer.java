@@ -25,6 +25,9 @@ public class Customer {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @OneToOne(mappedBy = "customer")
+    private Cart cart;
+
     @OneToMany(mappedBy = "customer")
     private List<OrderRequest> orderRequests;
 

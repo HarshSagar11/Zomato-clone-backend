@@ -1,8 +1,6 @@
 package com.zomatoclone.Zomato.Clone.controllers;
 
-import com.zomatoclone.Zomato.Clone.dto.RestaurantResponseDto;
-import com.zomatoclone.Zomato.Clone.dto.SaveAddressRequestDto;
-import com.zomatoclone.Zomato.Clone.dto.SaveAddressResponseDto;
+import com.zomatoclone.Zomato.Clone.dto.*;
 import com.zomatoclone.Zomato.Clone.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -29,13 +27,26 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getNearByRestaurant(pageRequest).getContent());
     }
 
+    @GetMapping("/getRestaurantMenu/{restaurant_id}")
+    public ResponseEntity<List<MenuDto>> getMenuOfRestaurant(@PathVariable Long restaurant_id){
+        return ResponseEntity.ok(customerService.getMenuOfRestaurant(restaurant_id));
+    }
+
+    @PostMapping("/addItemToCart")
+    public ResponseEntity<ItemAddedToCartResponse> addMenuItemToCart(@RequestBody AddToCartRequest addToCartRequest){
+        return ResponseEntity.ok(customerService.addMenuItemsToCart(addToCartRequest));
+    }
+
+    @GetMapping("/getCart")
+    public ResponseEntity<CartResponseDto> getCartOfCustomer(){
+        return ResponseEntity.ok(customerService.getCartOfCustomer());
+    }
+
     @PostMapping("/saveAddress")
     public ResponseEntity<SaveAddressResponseDto> saveAddressOfCustomer(@RequestBody SaveAddressRequestDto saveAddressRequestDto){
         String message = customerService.saveNewAddress(saveAddressRequestDto);
         SaveAddressResponseDto saveAddressResponseDto = SaveAddressResponseDto.builder().message(message).build();
         return ResponseEntity.ok(saveAddressResponseDto);
     }
-
-
 
 }
