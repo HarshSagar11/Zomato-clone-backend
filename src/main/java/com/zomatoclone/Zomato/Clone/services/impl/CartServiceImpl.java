@@ -6,14 +6,15 @@ import com.zomatoclone.Zomato.Clone.entities.CartItem;
 import com.zomatoclone.Zomato.Clone.entities.Customer;
 import com.zomatoclone.Zomato.Clone.entities.MenuItem;
 import com.zomatoclone.Zomato.Clone.exceptions.BadRequestException;
+import com.zomatoclone.Zomato.Clone.exceptions.ResourceNotFoundException;
 import com.zomatoclone.Zomato.Clone.repositories.CartRepository;
-import com.zomatoclone.Zomato.Clone.services.CartItemService;
 import com.zomatoclone.Zomato.Clone.services.CartService;
 import com.zomatoclone.Zomato.Clone.services.MenuItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,6 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final MenuItemService menuItemService;
-    private final CartItemService cartItemService;
 
     @Override
     public Cart createNewCart(Customer customer) {
@@ -33,8 +33,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addItemToCartOfCustomer(Long customerId, AddToCartRequest addToCartRequest) {
-        Cart cart = cartRepository.findByCustomerId(customerId);
+    public void addItemToCartOfCustomer(Customer customer, AddToCartRequest addToCartRequest) {
+        Cart cart = customer.getCart();
         Optional<CartItem> existingCartItem = cart.getCartsItems().stream()
                 .filter(item -> item.getMenuItem().getId().equals(addToCartRequest.getMenuItemId()))
                 .findFirst();
@@ -56,6 +56,60 @@ public class CartServiceImpl implements CartService {
         cartItem.setQuantity(addToCartRequest.getQuantity());
         cart.getCartsItems().add(cartItem);
         cart.setTotalAmount(cart.getTotalAmount() + (menuItem.getPrice()*addToCartRequest.getQuantity()));
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void removeItemFromCart(Long cartItemId, Customer customer) {
+        Cart cart = customer.getCart();
+        if(cart.getCartsItems().size() == 1){
+            clearCart(customer);
+            return;
+        }
+        CartItem cartItemToRemove = cart.getCartsItems().stream()
+                .filter(item -> item.getId().equals(cartItemId))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Cart item is not present in cart."));
+
+        cart.getCartsItems().remove(cartItemToRemove);
+        cart.setTotalAmount(
+                cart.getTotalAmount() - cartItemToRemove.getMenuItem().getPrice() * cartItemToRemove.getQuantity()
+        );
+
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void clearCart(Customer customer){
+        Cart cart = customer.getCart();
+        cart.getCartsItems().clear();
+        cart.setRestaurant(null);
+        cart.setTotalAmount(0);
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void incrementCartItemQuantity(Customer customer, Long cartItemId) {
+        Cart cart = customer.getCart();
+        CartItem item = cart.getCartsItems().stream()
+                .filter(cartItem -> Objects.equals(cartItem.getId(), cartItemId))
+                .findFirst()
+                .orElseThrow(()-> new ResourceNotFoundException("This cart item is not present in cart"));
+
+        item.setQuantity(item.getQuantity() + 1);
+        cart.setTotalAmount(cart.getTotalAmount() + item.getMenuItem().getPrice());
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void decrementCartItemQuantity(Customer customer, Long cartItemId) {
+        Cart cart = customer.getCart();
+        CartItem item = cart.getCartsItems().stream()
+                .filter(cartItem -> Objects.equals(cartItem.getId(), cartItemId))
+                .findFirst()
+                .orElseThrow(()-> new ResourceNotFoundException("This cart item is not present in cart"));
+        item.setQuantity(item.getQuantity() - 1);
+        cart.setTotalAmount(cart.getTotalAmount() - item.getMenuItem().getPrice());
         cartRepository.save(cart);
     }
 }

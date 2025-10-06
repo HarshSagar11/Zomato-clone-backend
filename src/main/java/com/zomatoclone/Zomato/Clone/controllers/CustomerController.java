@@ -49,4 +49,35 @@ public class CustomerController {
         return ResponseEntity.ok(saveAddressResponseDto);
     }
 
+    @DeleteMapping("/removeCartItem/{cartItemId}")
+    public ResponseEntity<DeleteCartItemResponse> removeItemFromCart(@PathVariable Long cartItemId){
+        customerService.removeCartItem(cartItemId);
+        DeleteCartItemResponse deleteCartItemResponse = DeleteCartItemResponse.builder()
+                .message("Cart itemDeletedSuccessFully").build();
+        return ResponseEntity.ok(deleteCartItemResponse);
+    }
+
+    @DeleteMapping("/clearCart")
+    public ResponseEntity<DeleteCartItemResponse> clearCart(){
+        customerService.clearCart();
+        DeleteCartItemResponse deleteCartItemResponse = DeleteCartItemResponse.builder()
+                .message("Cart itemDeletedSuccessFully").build();
+        return ResponseEntity.ok(deleteCartItemResponse);
+    }
+
+    @PutMapping("/increaseCartItem/{item_id}")
+    public ResponseEntity<ChangeCartItemQuantityResponse> increaseCartItem(@PathVariable Long item_id){
+        customerService.increaseCartItemQuantity(item_id);
+        ChangeCartItemQuantityResponse changeCartItemQuantityResponse = ChangeCartItemQuantityResponse.builder()
+                .message("Cart itemDeletedSuccessFully").build();
+        return ResponseEntity.ok(changeCartItemQuantityResponse);
+    }
+    @PutMapping("/decreaseCartItem/{item_id}")
+    public ResponseEntity<ChangeCartItemQuantityResponse> decreaseCartItem(@PathVariable Long item_id){
+        customerService.decreaseCartItemQuantity(item_id);
+        ChangeCartItemQuantityResponse changeCartItemQuantityResponse = ChangeCartItemQuantityResponse.builder()
+                .message("Cart itemDeletedSuccessFully").build();
+        return ResponseEntity.ok(changeCartItemQuantityResponse);
+    }
+
 }

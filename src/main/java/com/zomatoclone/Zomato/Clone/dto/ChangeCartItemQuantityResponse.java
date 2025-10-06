@@ -5,14 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MenuDto {
-    private String menuName;
-    private List<MenuItemDto> items;
-    private boolean isActive;
+public class ChangeCartItemQuantityResponse {
+    private String message;
 }

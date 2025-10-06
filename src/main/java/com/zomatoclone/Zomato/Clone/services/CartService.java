@@ -7,5 +7,13 @@ import com.zomatoclone.Zomato.Clone.entities.Customer;
 public interface CartService {
     Cart createNewCart(Customer customer);
 
-    void addItemToCartOfCustomer(Long customerId, AddToCartRequest addToCartRequest);
+    void addItemToCartOfCustomer(Customer customer, AddToCartRequest addToCartRequest);
+
+    void removeItemFromCart(Long cartItemId, Customer customer);
+
+    void clearCart(Customer customer);
+
+    void incrementCartItemQuantity(Customer customer, Long CartItemId);
+
+    void decrementCartItemQuantity(Customer customer, Long CartItemId);
 }

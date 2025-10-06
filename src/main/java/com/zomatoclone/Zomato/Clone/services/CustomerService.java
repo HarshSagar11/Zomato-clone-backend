@@ -18,4 +18,12 @@ public interface CustomerService {
     ItemAddedToCartResponse addMenuItemsToCart(AddToCartRequest addToCartRequest);
 
     CartResponseDto getCartOfCustomer();
+
+    void removeCartItem(Long cartItemId);
+
+    void clearCart();
+
+    void decreaseCartItemQuantity(Long cartItemId);
+
+    void increaseCartItemQuantity(Long cartItemId);
 }

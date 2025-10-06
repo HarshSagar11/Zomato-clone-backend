@@ -1,8 +1,6 @@
 package com.zomatoclone.Zomato.Clone.dto;
 
 import com.zomatoclone.Zomato.Clone.entities.enums.MenuItemType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

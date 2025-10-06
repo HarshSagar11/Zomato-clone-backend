@@ -4,7 +4,6 @@ import com.zomatoclone.Zomato.Clone.dto.*;
 import com.zomatoclone.Zomato.Clone.entities.*;
 import com.zomatoclone.Zomato.Clone.exceptions.BadRequestException;
 import com.zomatoclone.Zomato.Clone.exceptions.ResourceNotFoundException;
-import com.zomatoclone.Zomato.Clone.exceptions.ServiceUnavailableException;
 import com.zomatoclone.Zomato.Clone.repositories.CustomerRepository;
 import com.zomatoclone.Zomato.Clone.services.*;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -76,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ItemAddedToCartResponse addMenuItemsToCart(AddToCartRequest addToCartRequest) {
         Customer customer = this.getCurrentCustomer();
-        cartService.addItemToCartOfCustomer(customer.getId(), addToCartRequest);
+        cartService.addItemToCartOfCustomer(customer, addToCartRequest);
         return ItemAddedToCartResponse.builder().message("Item Added to cart Successfully").build();
     }
 
@@ -85,6 +83,30 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = this.getCurrentCustomer();
         Cart cart = customer.getCart();
         return modelMapper.map(cart,CartResponseDto.class);
+    }
+
+    @Override
+    public void removeCartItem(Long cartItemId) {
+        Customer customer = this.getCurrentCustomer();
+        cartService.removeItemFromCart(cartItemId,customer);
+    }
+
+    @Override
+    public void clearCart() {
+        Customer customer = this.getCurrentCustomer();
+        cartService.clearCart(customer);
+    }
+
+    @Override
+    public void decreaseCartItemQuantity(Long cartItemId) {
+        Customer customer = this.getCurrentCustomer();
+        cartService.decrementCartItemQuantity(customer, cartItemId);
+    }
+
+    @Override
+    public void increaseCartItemQuantity(Long cartItemId) {
+        Customer customer = this.getCurrentCustomer();
+        cartService.incrementCartItemQuantity(customer, cartItemId);
     }
 
     private Customer getCurrentCustomer(){
